@@ -1,0 +1,10 @@
+functions-framework==3.*
+google-api-core
+google-cloud
+google-cloud-discoveryengine
+google-cloud-storage
+protobuf
+google-cloud-aiplatform
+google-auth
+google-api-python-client
+google-auth-oauthlib
