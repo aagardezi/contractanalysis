@@ -1,4 +1,5 @@
 import functions_framework
+import os
 
 import base64
 import vertexai
@@ -6,6 +7,11 @@ from vertexai.generative_models import GenerativeModel, Part, FinishReason
 import vertexai.preview.generative_models as generative_models
 from google.cloud import bigquery
 from datetime import datetime
+
+PROJECT_ID = os.environ.get("PROJECT_ID")
+DATASET_ID = os.environ.get("DATASET_ID")
+TABLE_ID = os.environ.get("TABLE_ID")
+
 
 # Triggered by a change in a storage bucket
 @functions_framework.cloud_event
@@ -38,7 +44,11 @@ def send_to_gemini_gcs(cloud_event):
     )
 
     file1 = Part.from_uri(mime_type=mime_type, uri=f"gs://{bucket}/{name}")
-    text1 = """Can you act like a legal advisor and analyse this contract and classify the contract. Make sure you assess the entire document before you make the decision. Make the output a json with a field: contract_type. Also include in the output json parties with roles; value of agreement with currency;  summary of termination clauses; confidentiality provisions; material adverse change. The json response should match the following structure
+    text1 = """Can you act like a legal advisor and analyse this contract and classify the contract. 
+    Make sure you assess the entire document before you make the decision. 
+    Make the output a json with a field: contract_type. Also include in the output json parties with roles; 
+    value of agreement with currency;  summary of termination clauses; confidentiality provisions; material adverse change. 
+    The json response should match the following structure
     {\"contract_type\": \"\",
     \"parties\":[\"name\": \"\",\"role\": \"\"],
     \"value\": \"\",
@@ -65,18 +75,18 @@ def send_to_gemini_gcs(cloud_event):
     client = bigquery.Client()
 
     # Set the project ID and dataset ID.
-    project_id = "genaillentsearch"
-    dataset_id = "contractanalysis"
+    # project_id = "genaillentsearch"
+    # dataset_id = "contractanalysis"
 
-    # Set the table ID.
-    table_id = "contractdetail"
+    # # Set the table ID.
+    # table_id = "contractdetail"
 
     timestamp = datetime.utcnow().isoformat()
 
     data = [{"filepath": f"gs://{bucket}/{name}", "details": fileresponse, "timestamp": timestamp}]
 
     errors = client.insert_rows_json(
-      f"{project_id}.{dataset_id}.{table_id}", data)
+      f"{PROJECT_ID}.{DATASET_ID}.{TABLE_ID}", data)
     print(errors)
 
 
