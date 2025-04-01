@@ -1,0 +1,5 @@
+
+Can you act like a legal advisor and analyse this contract and classify the contract. 
+    Make sure you assess the entire document before you make the decision. 
+    Make the output a json with a field: contract_type. Also include in the output json parties with roles; 
+    value of agreement with currency;  summary of termination clauses; confidentiality provisions; material adverse change. Can you infer material adverse change based on the context of the entire contract and summarise it. Also include a summary of the either contract/document.

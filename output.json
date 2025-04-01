@@ -1,0 +1,48 @@
+{
+    "type": "OBJECT",
+    "properties": {
+        "contract_type": {
+            "type": "STRING"
+        },
+        "value": {
+            "type": "NUMBER"
+        },
+        "termination_clauses": {
+            "type": "STRING"
+        },
+        "confidentiality_provisions": {
+            "type": "STRING"
+        },
+        "material_adverse_change": {
+            "type": "STRING"
+        },
+        "summary": {
+            "type": "STRING"
+        },
+        "parties": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "name": {
+                        "type": "STRING",
+                        "nullable": "FALSE"
+                    },
+                    "role": {
+                        "type": "STRING",
+                        "nullable": "FALSE"
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "contract_type",
+        "value",
+        "termination_clauses",
+        "confidentiality_provisions",
+        "parties",
+        "material_adverse_change",
+        "summary"
+    ]
+}
